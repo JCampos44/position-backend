@@ -24,7 +24,9 @@ class MontoController extends Controller
     {
         $user = auth()->user();
 
-        $monto = Monto::where('fecha', $request->fecha)
+        $fecha = date('Y-m-d', strtotime($request->fecha));
+
+        $monto = Monto::where('fecha', $fecha)
             ->where('user_id', $user->id)
             ->first();
 
@@ -34,7 +36,7 @@ class MontoController extends Controller
             ]);
         } else {
             $monto = Monto::create([
-                'fecha' => $request->fecha,
+                'fecha' => $fecha,
                 'monto' => $request->monto,
                 'user_id' => $user->id
             ]);
